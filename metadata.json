@@ -1,0 +1,6 @@
+{
+  "name": "Mzungu Chat Earn",
+  "description": "Shillings Chat Earn: Chat with AI friends from Europe & USA, practice Kiswahili, and earn 500 Shillings per hour across Kenya, Tanzania, and Uganda.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

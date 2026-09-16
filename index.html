@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function() {
+        // Safeguard against "Cannot set property fetch of #<Window> which has only a getter"
+        // in environments, iframes, or extensions that attempt to reassign window.fetch
+        try {
+          var protoDesc = typeof Window !== 'undefined' && Window.prototype ? Object.getOwnPropertyDescriptor(Window.prototype, 'fetch') : null;
+          var winDesc = Object.getOwnPropertyDescriptor(window, 'fetch');
+          
+          if ((protoDesc && protoDesc.get && !protoDesc.set) || (winDesc && winDesc.get && !winDesc.set)) {
+            var activeFetch = window.fetch ? window.fetch.bind(window) : undefined;
+            Object.defineProperty(window, 'fetch', {
+              get: function() {
+                return activeFetch;
+              },
+              set: function(fn) {
+                activeFetch = fn;
+              },
+              configurable: true,
+              enumerable: true
+            });
+          }
+        } catch (err) {
+          // Gracefully continue
+        }
+
+        // Global error listener to intercept and suppress getter-only errors from external instrumentation
+        window.addEventListener('error', function(event) {
+          if (event && event.message && event.message.indexOf('fetch of #<Window> which has only a getter') !== -1) {
+            console.warn('Suppressed fetch getter error:', event.message);
+            if (typeof event.preventDefault === 'function') {
+              event.preventDefault();
+            }
+            return true;
+          }
+        }, true);
+      })();
+    </script>
+    <title>Mzungu Chat Earn - Practice Kiswahili & Earn Shillings</title>
+    <meta name="description" content="Shillings Chat Earn: Chat with AI friends from Europe & USA, practice Kiswahili, and earn 500 Shillings per hour across Kenya, Tanzania, and Uganda." />
+    <meta property="og:title" content="Mzungu Chat Earn - Practice Kiswahili & Earn Shillings" />
+    <meta property="og:description" content="Shillings Chat Earn: Chat with AI friends from Europe & USA, practice Kiswahili, and earn 500 Shillings per hour across Kenya, Tanzania, and Uganda." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body class="font-sans antialiased bg-[#0B0F17] text-slate-100 min-h-screen selection:bg-emerald-500 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
